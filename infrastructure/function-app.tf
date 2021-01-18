@@ -31,12 +31,8 @@ resource "azurerm_function_app" "func" {
   //   linux_fx_version = "11"
   // }
   app_settings = {
-    FUNCTIONS_EXTENSION_VERSION    = "~3"
     FUNCTIONS_WORKER_RUNTIME       = "java"
-    JAVA_OPTS                      = "-Djava.awt.headless=true"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.appinsights.instrumentation_key
-    WEBSITE_USE_ZIP                = "${azurerm_storage_blob.appcode.url}${data.azurerm_storage_account_sas.sas.sas}"
-    // TODO: Azure complains about having App Insights AND a value for AzureWebJobsDashboard but I cannot "clear" this value.
-    AzureWebJobsDashboard = ""
+    WEBSITE_RUN_FROM_PACKAGE       = "${azurerm_storage_blob.appcode.url}${data.azurerm_storage_account_sas.sas.sas}"
   }
 }
