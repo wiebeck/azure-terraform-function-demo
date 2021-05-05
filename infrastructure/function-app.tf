@@ -25,11 +25,9 @@ resource "azurerm_function_app" "func" {
   storage_account_name       = azurerm_storage_account.storage.name
   storage_account_access_key = azurerm_storage_account.storage.primary_access_key
   version                    = "~3"
-  // TODO: How to set the Java runtime version?
-  // the following was recommended on https://stackoverflow.com/a/64533932 but doesn't work: "The parameter LinuxFxVersion has an invalid value."
-  // site_config {
-  //   linux_fx_version = "11"
-  // }
+  site_config {
+    java_version = "11"
+  }
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "java"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.appinsights.instrumentation_key
